@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "OrderProcessedEvent",
+  "namespace": "com.josemaker.product_service.avro",
+  "fields": [
+    { "name": "message", "type": "string" },
+    { "name": "orderId", "type": "long" },
+    { "name": "productName", "type": "string" },
+    { "name": "customerName", "type": "string" },
+    { "name": "customerEmail", "type": "string" },
+    { "name": "quantity", "type": "int" },
+    { "name": "totalPrice", "type": "double" },
+    { "name": "processedDate", "type": "string" }
+  ]
+}

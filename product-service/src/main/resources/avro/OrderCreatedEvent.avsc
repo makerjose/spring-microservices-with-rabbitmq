@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "OrderCreatedEvent",
+  "namespace": "com.josemaker.product_service.avro",
+  "fields": [
+    { "name": "orderId", "type": "long" },
+    { "name": "productId", "type": "long" },
+    { "name": "customerName", "type": "string" },
+    { "name": "customerEmail", "type": "string" },
+    { "name": "quantity", "type": "int" },
+    { "name": "orderDate", "type": "string" }
+  ]
+}
