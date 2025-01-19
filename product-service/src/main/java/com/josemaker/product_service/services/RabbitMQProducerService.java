@@ -3,7 +3,6 @@ package com.josemaker.product_service.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.josemaker.product_service.avro.OrderProcessedEvent;
 import com.josemaker.product_service.avro.ProductCreatedEvent;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,6 @@
 package com.josemaker.order_service.config;
 
-import org.springframework.amqp.core.Exchange;
-import org.springframework.amqp.core.ExchangeBuilder;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,33 +8,33 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQProducerConfig {
 
-    @Value("${rabbitmq.exchange.name}")
-    private String exchangeName;
+    private final String orderCreatedExchange;
+    private final String orderCreatedQueue;
 
-    @Value("${spring.rabbitmq.host}")
-    private String rabbitmqHost;
 
-    @Value("${spring.rabbitmq.username}")
-    private String rabbitmqUsername;
+    public RabbitMQProducerConfig(
+            @Value("${rabbitmq.exchanges.order-created}") String orderCreatedExchange,
+            @Value("${rabbitmq.queues.order-created}") String orderCreatedQueue) {
 
-    @Value("${spring.rabbitmq.password}")
-    private String rabbitmqPassword;
-
-    @Bean
-    public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(rabbitmqHost);
-        connectionFactory.setUsername(rabbitmqUsername);
-        connectionFactory.setPassword(rabbitmqPassword);
-        return connectionFactory;
+        this.orderCreatedExchange = orderCreatedExchange;
+        this.orderCreatedQueue = orderCreatedQueue;
     }
 
+    // Define Fanout Exchanges
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
-        return new RabbitTemplate(connectionFactory);
+    public FanoutExchange orderCreatedFanoutExchange() {
+        return new FanoutExchange(orderCreatedExchange);
     }
 
+    // Define Queues
     @Bean
-    public Exchange orderExchange() {
-        return ExchangeBuilder.fanoutExchange(exchangeName).durable(true).build();
+    public Queue orderCreatedQueue() {
+        return new Queue(orderCreatedQueue);
+    }
+
+    // Bind Queues to Exchanges
+    @Bean
+    public Binding orderCreatedBinding(Queue orderCreatedQueue, FanoutExchange orderCreatedFanoutExchange) {
+        return BindingBuilder.bind(orderCreatedQueue).to(orderCreatedFanoutExchange);
     }
 }

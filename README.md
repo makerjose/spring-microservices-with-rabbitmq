@@ -1,4 +1,4 @@
-# Spring Microservices with Kafka Communication
+# Spring Microservices with RabbitMQ Communication
 
 ## Overview
 
@@ -48,7 +48,7 @@ docker-compose up --build
 ```
 
 This will:
--	Launch Kafka and Zookeeper for handling message brokering.
+-	Launch RabbitMQ for handling message brokering.
 -	Start each microservice and postgres on its designated port as specified in the compose.yml file.
 
 ### Step 4: Set Up Databases in Postgres
