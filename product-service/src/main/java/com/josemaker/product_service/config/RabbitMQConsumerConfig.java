@@ -1,9 +1,6 @@
 package com.josemaker.product_service.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -18,22 +15,22 @@ public class RabbitMQConsumerConfig {
     private final int rabbitMQPort;
     private final String username;
     private final String password;
-    private final String queueName;
-    private final String exchangeName;
+    private final String orderCreatedQueue;
+    private final String orderCreatedExchange;
 
     public RabbitMQConsumerConfig(
             @Value("${spring.rabbitmq.host}") String rabbitMQHost,
             @Value("${spring.rabbitmq.port}") int rabbitMQPort,
             @Value("${spring.rabbitmq.username}") String username,
             @Value("${spring.rabbitmq.password}") String password,
-            @Value("${rabbitmq.queues.order-processed}") String queueName,
-            @Value("${rabbitmq.exchanges.product-created}") String exchangeName) {
+            @Value("${rabbitmq.queues.order-created}") String orderCreatedQueue,
+            @Value("${rabbitmq.exchanges.order-created}") String orderCreatedExchange) {
         this.rabbitMQHost = rabbitMQHost;
         this.rabbitMQPort = rabbitMQPort;
         this.username = username;
         this.password = password;
-        this.queueName = queueName;
-        this.exchangeName = exchangeName;
+        this.orderCreatedQueue = orderCreatedQueue;
+        this.orderCreatedExchange = orderCreatedExchange;
     }
 
     @Bean
@@ -55,17 +52,13 @@ public class RabbitMQConsumerConfig {
     }
 
     @Bean
-    public Queue queue() {
-        return new Queue(queueName, true); // durable queue
+    public Queue orderCreatedQueue() {
+        return new Queue(orderCreatedQueue, true); // durable queue
     }
 
     @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(exchangeName);
-    }
-
-    @Bean
-    public Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("product.created.#");
+    public Binding orderCreatedBinding(Queue orderCreatedQueue) {
+        return BindingBuilder.bind(orderCreatedQueue)
+                .to(new FanoutExchange(orderCreatedExchange, true, false)); // Use existing exchange
     }
 }

@@ -33,7 +33,7 @@ public class RabbitMQProducerConfig {
 
     @Bean
     public FanoutExchange orderProcessedFanoutExchange() {
-        return new FanoutExchange(orderProcessedExchange);
+        return new FanoutExchange(orderProcessedExchange); //
     }
 
     // Define Queues

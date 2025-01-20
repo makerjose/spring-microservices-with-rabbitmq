@@ -68,11 +68,11 @@ CREATE DATABASE "order-db";
 \q
 ```
 
-### Testing Kafka Communication
+### Testing RabbitMQ Communication
 
-Each microservice has Kafka producers and consumers set up for event communication. To test this:
-1.	Send a message from one microservice to a Kafka topic.
-2.	Observe how other microservices that subscribe to this topic react to the event (check logs for message consumption).
+Each microservice has RabbitMQ producers and consumers set up for event communication. To test this:
+1.	Send a message from one microservice to a RabbitMQ exchange/queue.
+2.	Observe how other microservices that subscribe to this exchanges react to the event (check logs for message consumption).
 
 ## Stopping the Services
 
@@ -83,8 +83,8 @@ docker-compose down
 
 ## Additional Notes
 
--	Each microservice can be configured independently via its application.properties file, allowing custom Kafka topics, consumer groups, etc.
--	Kafka, Zookeeper and Postgres have their designated volumes for persisting data. 
+-	Each microservice can be configured independently via its application.properties file, allowing custom RabbitMQ exchanges, queues, etc.
+-	RabbitMQ and Postgres have their designated volumes for persisting data. 
 
 ## License
 
