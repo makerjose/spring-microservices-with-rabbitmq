@@ -48,11 +48,11 @@ public class OrderController {
             // Save to DB
             orderService.createOrder(orderEntity);
 
-            // Map entity to Avro class for RabbitMQ message
-            OrderCreatedEvent orderCreated = mapEntityToAvro(orderEntity);
+//            // Map entity to Avro class for RabbitMQ message
+//            OrderCreatedEvent orderCreated = mapEntityToAvro(orderEntity);
 
             // Send RabbitMQ message after successful save
-            rabbitMQProducerService.sendOrderCreatedEvent(orderCreated);
+            rabbitMQProducerService.sendOrderCreatedEvent(orderEntity);
 
             // Populate response DTO
             request.setOrderDate(orderEntity.getOrderDate());
@@ -81,14 +81,15 @@ public class OrderController {
         }
     }
 
-    private OrderCreatedEvent mapEntityToAvro(OrderEntity entity) {
-        return OrderCreatedEvent.newBuilder()
-                .setOrderId(entity.getOrderId())
-                .setProductId(entity.getProductId())
-                .setCustomerName(entity.getCustomerName())
-                .setCustomerEmail(entity.getCustomerEmail())
-                .setQuantity(entity.getQuantity())
-                .setOrderDate(entity.getOrderDate())
-                .build();
-    }
+//    private OrderCreatedEvent mapEntityToAvro(OrderEntity entity) {
+//        return OrderCreatedEvent.newBuilder()
+//                .setOrderId(entity.getOrderId())
+//                .setProductId(entity.getProductId())
+//                .setCustomerName(entity.getCustomerName())
+//                .setCustomerEmail(entity.getCustomerEmail())
+//                .setQuantity(entity.getQuantity())
+//                .setOrderDate(entity.getOrderDate())
+//                .build();
+//    }
+
 }

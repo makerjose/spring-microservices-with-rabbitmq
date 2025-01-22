@@ -2,6 +2,7 @@ package com.josemaker.order_service.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.josemaker.order_service.avro.OrderCreatedEvent;
+import com.josemaker.order_service.entities.OrderEntity;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,12 @@ public class RabbitMQProducerService {
         this.objectMapper = objectMapper;
     }
 
-    public void sendOrderCreatedEvent(OrderCreatedEvent orderCreatedEvent) {
+    public void sendOrderCreatedEvent(OrderEntity orderEntity) {
         try {
             Map<String, Object> headers = new HashMap<>();
             headers.put("content_type", "application/json");
 
-            byte[] messageBody = objectMapper.writeValueAsBytes(orderCreatedEvent);
+            byte[] messageBody = objectMapper.writeValueAsBytes(orderEntity);
 
             rabbitTemplate.convertAndSend(orderCreatedExchange, "", messageBody, message -> {
                 message.getMessageProperties().getHeaders().putAll(headers);

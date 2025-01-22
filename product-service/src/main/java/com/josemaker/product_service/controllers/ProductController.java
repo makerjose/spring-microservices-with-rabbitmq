@@ -45,8 +45,8 @@ public class ProductController {
 
             productService.createProduct(productEntity);
 
-            ProductCreatedEvent productCreated = mapEntityToAvro(productEntity);
-            rabbitMQProducerService.sendProductCreatedEvent(productCreated);
+//            ProductCreatedEvent productCreated = mapEntityToAvro(productEntity);
+//            rabbitMQProducerService.sendProductCreatedEvent(productCreated);
 
             logger.info("Success, product created: {}, Type: {}, Price: {}, Quantity: {}",
                     productEntity.getName(), productEntity.getType(), productEntity.getTotalPrice(), productEntity.getQuantity());
@@ -73,14 +73,15 @@ public class ProductController {
         }
     }
 
-    private ProductCreatedEvent mapEntityToAvro(ProductEntity entity) {
-        return ProductCreatedEvent.newBuilder()
-                .setProductId(entity.getProductId())
-                .setName(entity.getName())
-                .setTotalPrice(entity.getTotalPrice())
-                .setQuantity(entity.getQuantity())
-                .setType(entity.getType())
-                .build();
-    }
+//    private ProductCreatedEvent mapEntityToAvro(ProductEntity entity) {
+//        return ProductCreatedEvent.newBuilder()
+//                .setProductId(entity.getProductId())
+//                .setName(entity.getName())
+//                .setTotalPrice(entity.getTotalPrice())
+//                .setQuantity(entity.getQuantity())
+//                .setType(entity.getType())
+//                .build();
+//    }
+
 }
 

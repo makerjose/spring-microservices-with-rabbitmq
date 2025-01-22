@@ -36,10 +36,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void updateProductQuantity(OrderCreatedEvent orderCreatedEvent) {
+    public void updateProductQuantity(OrderCreatedDto orderCreatedDto) {
         try {
-            Long productId = orderCreatedEvent.getProductId();
-            Integer orderQuantity = orderCreatedEvent.getQuantity();
+            Long productId = orderCreatedDto.getProductId();
+            Integer orderQuantity = orderCreatedDto.getQuantity();
 
             ProductEntity productEntity = productRepository.findById(productId)
                     .orElseThrow(() -> new RuntimeException("Product with ID " + productId + " not found"));
@@ -53,16 +53,16 @@ public class ProductService {
 
             logger.info("Product quantity updated successfully for Product ID: {}", productId);
 
-            OrderProcessedEvent orderProcessedEvent = new OrderProcessedEvent();
-            orderProcessedEvent.setMessage("Order processed successfully");
-            orderProcessedEvent.setCustomerName(orderCreatedEvent.getCustomerName());
-            orderProcessedEvent.setCustomerEmail(orderCreatedEvent.getCustomerEmail());
-            orderProcessedEvent.setQuantity(orderCreatedEvent.getQuantity());
-            orderProcessedEvent.setProcessedDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-            orderProcessedEvent.setProductName(productEntity.getName());
-            orderProcessedEvent.setTotalPrice(productEntity.getTotalPrice());
+            OrderProcessedDto orderProcessedDto = new OrderProcessedDto();
+            orderProcessedDto.setMessage("Order processed successfully");
+            orderProcessedDto.setCustomerName(orderCreatedDto.getCustomerName());
+            orderProcessedDto.setCustomerEmail(orderCreatedDto.getCustomerEmail());
+            orderProcessedDto.setQuantity(orderCreatedDto.getQuantity());
+            orderProcessedDto.setProcessedDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+            orderProcessedDto.setProductName(productEntity.getName());
+            orderProcessedDto.setTotalPrice(productEntity.getTotalPrice());
 
-            rabbitMQProducerService.sendOrderProcessedEvent(orderProcessedEvent);
+            rabbitMQProducerService.sendOrderProcessedEvent(orderProcessedDto);
             logger.info("Order processed event sent for Product ID: {}", productId);
 
         } catch (Exception e) {

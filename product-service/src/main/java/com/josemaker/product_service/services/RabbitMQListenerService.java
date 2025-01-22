@@ -1,7 +1,7 @@
 package com.josemaker.product_service.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.josemaker.product_service.avro.OrderCreatedEvent;
+import com.josemaker.product_service.dtos.OrderCreatedDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -24,11 +24,11 @@ public class RabbitMQListenerService {
     public void consumeOrderEvent(byte[] messageBody) {
         try {
             // Deserialize message
-            OrderCreatedEvent orderCreatedEvent = objectMapper.readValue(messageBody, OrderCreatedEvent.class);
-            logger.info("Received Order Event: {}", orderCreatedEvent);
+            OrderCreatedDto orderCreatedDto = objectMapper.readValue(messageBody, OrderCreatedDto.class);
+            logger.info("Received Order Event: {}", orderCreatedDto);
 
             // Process order and update inventory
-            productService.updateProductQuantity(orderCreatedEvent);
+            productService.updateProductQuantity(orderCreatedDto);
         } catch (Exception e) {
             logger.error("Error processing order event: {}", e.getMessage(), e);
         }
