@@ -20,7 +20,7 @@ public class RabbitMQListenerService {
         this.objectMapper = objectMapper;
     }
 
-    @RabbitListener(queues = "${rabbitmq.queues.order-processed}")
+    @RabbitListener(queues = "${rabbitmq.queues.order-created}")
     public void consumeOrderEvent(byte[] messageBody) {
         try {
             // Deserialize message

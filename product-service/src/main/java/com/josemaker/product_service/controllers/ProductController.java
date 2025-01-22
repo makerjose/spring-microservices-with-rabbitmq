@@ -1,6 +1,5 @@
 package com.josemaker.product_service.controllers;
 
-import com.josemaker.product_service.avro.ProductCreatedEvent;
 import com.josemaker.product_service.dtos.ProductDto;
 import com.josemaker.product_service.entities.ProductEntity;
 import com.josemaker.product_service.repositories.ProductRepository;
@@ -45,9 +44,6 @@ public class ProductController {
 
             productService.createProduct(productEntity);
 
-//            ProductCreatedEvent productCreated = mapEntityToAvro(productEntity);
-//            rabbitMQProducerService.sendProductCreatedEvent(productCreated);
-
             logger.info("Success, product created: {}, Type: {}, Price: {}, Quantity: {}",
                     productEntity.getName(), productEntity.getType(), productEntity.getTotalPrice(), productEntity.getQuantity());
 
@@ -72,16 +68,5 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-//    private ProductCreatedEvent mapEntityToAvro(ProductEntity entity) {
-//        return ProductCreatedEvent.newBuilder()
-//                .setProductId(entity.getProductId())
-//                .setName(entity.getName())
-//                .setTotalPrice(entity.getTotalPrice())
-//                .setQuantity(entity.getQuantity())
-//                .setType(entity.getType())
-//                .build();
-//    }
-
 }
 
