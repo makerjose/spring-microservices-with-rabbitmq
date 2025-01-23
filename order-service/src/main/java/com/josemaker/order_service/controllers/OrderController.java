@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -31,11 +33,23 @@ public class OrderController {
     @PostMapping("/createOrder")
     public ResponseEntity<OrderRequestDto> createOrder(@RequestBody OrderRequestDto request) {
         try {
-            if (request == null) {
-                request.setMessage("Bad Request!");
+            if (request == null || request.getCustomerEmail() == null || request.getCustomerEmail().trim().isEmpty()) {
+                request.setMessage("Bad Request! Please provide a valid email address.");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(request);
             }
 
+            // Email validation
+            String emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+            Pattern emailPattern = Pattern.compile(emailRegex);
+
+            Matcher matcher = emailPattern.matcher(request.getCustomerEmail().trim());
+
+            if (!matcher.matches()) {
+                request.setMessage("Invalid email address. Please enter a valid email.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(request);
+            }
+
+            // Proceed with order creation if email is valid
             OrderEntity orderEntity = new OrderEntity();
 
             // Set data to entity
@@ -47,9 +61,6 @@ public class OrderController {
 
             // Save to DB
             orderService.createOrder(orderEntity);
-
-//            // Map entity to Avro class for RabbitMQ message
-//            OrderCreatedEvent orderCreated = mapEntityToAvro(orderEntity);
 
             // Send RabbitMQ message after successful save
             rabbitMQProducerService.sendOrderCreatedEvent(orderEntity);
@@ -91,5 +102,4 @@ public class OrderController {
 //                .setOrderDate(entity.getOrderDate())
 //                .build();
 //    }
-
 }

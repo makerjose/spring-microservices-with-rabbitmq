@@ -35,7 +35,6 @@ public class RabbitMQProducerService {
 
             rabbitTemplate.convertAndSend(orderCreatedExchange, "", messageBody, message -> {
                 message.getMessageProperties().getHeaders().putAll(headers);
-                System.out.println("ORDER CREATED EVENT SUCCESS!");
                 return message;
             });
         } catch (Exception e) {
