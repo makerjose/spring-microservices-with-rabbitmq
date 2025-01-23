@@ -91,15 +91,4 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-//    private OrderCreatedEvent mapEntityToAvro(OrderEntity entity) {
-//        return OrderCreatedEvent.newBuilder()
-//                .setOrderId(entity.getOrderId())
-//                .setProductId(entity.getProductId())
-//                .setCustomerName(entity.getCustomerName())
-//                .setCustomerEmail(entity.getCustomerEmail())
-//                .setQuantity(entity.getQuantity())
-//                .setOrderDate(entity.getOrderDate())
-//                .build();
-//    }
 }
