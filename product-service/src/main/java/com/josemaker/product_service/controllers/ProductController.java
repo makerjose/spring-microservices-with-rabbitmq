@@ -42,6 +42,7 @@ public class ProductController {
             productEntity.setTotalPrice(request.getTotalPrice());
             productEntity.setQuantity(request.getQuantity());
 
+            // save product to Db
             productService.createProduct(productEntity);
 
             logger.info("Success, product created: {}, Type: {}, Price: {}, Quantity: {}",

@@ -12,7 +12,7 @@
 	<artifactId>email-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>notification-microservice</name>
+	<name>email-service</name>
 	<description>Email service. Send notifications to customers</description>
 	<url/>
 	<licenses>
@@ -36,11 +36,15 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 	</dependencies>
-
 	<build>
 		<plugins>
 		</plugins>

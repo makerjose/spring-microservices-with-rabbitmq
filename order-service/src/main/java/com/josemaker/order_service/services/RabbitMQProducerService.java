@@ -1,7 +1,6 @@
 package com.josemaker.order_service.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.josemaker.order_service.avro.OrderCreatedEvent;
 import com.josemaker.order_service.entities.OrderEntity;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
