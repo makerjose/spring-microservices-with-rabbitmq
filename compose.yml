@@ -46,6 +46,22 @@ services:
     depends_on:
       - rabbitmq
 
+  email-service:
+    build: ./email-service
+    image: email-service:latest
+    container_name: email-service
+    hostname: email-service
+    ports:
+      - "8085:8080"
+    networks:
+      - my_network
+    environment:
+      SPRING_RABBITMQ_HOST: 'rabbitmq'
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_PROFILES_ACTIVE: 'dev'
+    depends_on:
+      - rabbitmq
+
   postgres:
     image: 'postgres:15'
     container_name: postgres

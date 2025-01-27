@@ -1,7 +1,5 @@
 package com.josemaker.product_service.services;
 
-import com.josemaker.product_service.avro.OrderCreatedEvent;
-import com.josemaker.product_service.avro.OrderProcessedEvent;
 import com.josemaker.product_service.dtos.OrderCreatedDto;
 import com.josemaker.product_service.dtos.OrderProcessedDto;
 import com.josemaker.product_service.entities.ProductEntity;

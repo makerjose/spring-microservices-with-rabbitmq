@@ -1,6 +1,5 @@
 package com.josemaker.order_service.controllers;
 
-import com.josemaker.order_service.avro.OrderCreatedEvent;
 import com.josemaker.order_service.dtos.OrderRequestDto;
 import com.josemaker.order_service.entities.OrderEntity;
 import com.josemaker.order_service.services.RabbitMQProducerService;
