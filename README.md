@@ -44,7 +44,7 @@ cd ../email-service mvn clean install
 
 From the main project directory, use Docker Compose to start all the services, including RabbitMQ.
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 This will:
@@ -78,7 +78,7 @@ Each microservice has RabbitMQ producers and consumers set up for event communic
 
 To stop all running containers, run:
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ## Additional Notes
