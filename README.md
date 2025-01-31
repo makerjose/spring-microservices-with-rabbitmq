@@ -78,7 +78,7 @@ Each microservice has RabbitMQ producers and consumers set up for event communic
 
 To stop all running containers, run:
 ```bash
-docker compose down
+dockercompose down
 ```
 
 ## Additional Notes
