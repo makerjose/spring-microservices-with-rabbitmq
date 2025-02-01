@@ -76,9 +76,25 @@ services:
     networks:
       - my_network
 
+    rabbitmq-db:
+      image: 'postgres:15'
+      container_name: rabbitmq-db
+      hostname: rabbitmq-db
+      ports:
+        - "5433:5432"
+      environment:
+        POSTGRES_USER: rabbitmq_user
+        POSTGRES_PASSWORD: rabbitmq_pass
+        POSTGRES_DB: rabbitmq_messages
+      volumes:
+        - rabbitmq_db_data:/var/lib/postgresql/data
+      networks:
+        - my_network
+    
 volumes:
   rabbitmq_data:
   postgres_data:
+  rabbitmq_db_data:
 
 networks:
   my_network:

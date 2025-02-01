@@ -56,6 +56,7 @@ public class RabbitMQConsumerConfig {
         return new Queue(orderCreatedQueue, true); // durable queue
     }
 
+    // bind exchange to queue
     @Bean
     public Binding orderCreatedBinding(Queue orderCreatedQueue) {
         return BindingBuilder.bind(orderCreatedQueue)

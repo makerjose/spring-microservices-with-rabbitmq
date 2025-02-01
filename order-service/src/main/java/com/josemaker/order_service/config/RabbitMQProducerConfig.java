@@ -28,7 +28,7 @@ public class RabbitMQProducerConfig {
     // Define Queues
     @Bean
     public Queue orderCreatedQueue() {
-        return new Queue(orderCreatedQueue);
+        return new Queue(orderCreatedQueue, true);
     }
 
     // Bind Queues to Exchanges

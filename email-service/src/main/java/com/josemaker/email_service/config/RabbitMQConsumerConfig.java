@@ -52,8 +52,8 @@ public class RabbitMQConsumerConfig {
     }
 
     @Bean
-    public org.springframework.amqp.core.Queue orderProcessedQueue() {
-        return new org.springframework.amqp.core.Queue(orderProcessedQueue, true);
+    public Queue orderProcessedQueue() {
+        return new Queue(orderProcessedQueue, true);
     }
 
     @Bean

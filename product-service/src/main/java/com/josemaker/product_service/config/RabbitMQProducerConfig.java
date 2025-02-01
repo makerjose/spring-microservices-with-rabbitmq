@@ -27,7 +27,7 @@ public class RabbitMQProducerConfig {
 
     @Bean
     public Queue orderProcessedQueue() {
-        return new Queue(orderProcessedQueue);
+        return new Queue(orderProcessedQueue, true);
     }
 
     @Bean

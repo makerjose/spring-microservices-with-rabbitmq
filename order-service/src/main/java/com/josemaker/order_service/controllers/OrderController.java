@@ -4,6 +4,8 @@ import com.josemaker.order_service.dtos.OrderRequestDto;
 import com.josemaker.order_service.entities.OrderEntity;
 import com.josemaker.order_service.services.RabbitMQProducerService;
 import com.josemaker.order_service.services.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/v1/order")
+@Tag(name = "Order Controller", description = "APIs for managing orders")
 public class OrderController {
 
     @Autowired
@@ -30,6 +33,7 @@ public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @PostMapping("/createOrder")
+    @Operation(summary = "Create an order", description = "Creates order and sends RabbitMQ message to Product Service for processing")
     public ResponseEntity<OrderRequestDto> createOrder(@RequestBody OrderRequestDto request) {
         try {
             if (request == null || request.getCustomerEmail() == null || request.getCustomerEmail().trim().isEmpty()) {
@@ -80,6 +84,7 @@ public class OrderController {
     }
 
     @GetMapping("/getAllOrders")
+    @Operation(summary = "Get all orders", description = "Fetches all orders from the database.")
     public ResponseEntity<List<OrderEntity>> getAllOrders() {
         try {
             List<OrderEntity> orders = orderService.getAllOrders();
