@@ -16,7 +16,8 @@ The main project folder includes the following:
 ## Prerequisites
 
 - **Docker** and **Docker Compose** installed on your machine.
-- **Java JDK 17** or above for local development
+- **Java JDK 17** or above for local development.
+- **IntelliJ IDEA** is recomended.
 
 ## Getting Started
 
@@ -24,7 +25,7 @@ Follow these steps to clone and run the project locally using Docker Compose.
 
 ### 1. Clone the Repository
 ```bash
-git clone hhttps://github.com/makerjose/spring-microservices-with-rabbitmq.git
+git clone https://github.com/makerjose/spring-microservices-with-rabbitmq.git
 cd spring-microservices-with-rabbitmq
 ```
 
@@ -38,6 +39,7 @@ cd ../order-service mvn clean install
 
 cd ../email-service mvn clean install
 ```
+Installing the Maven Plugin from IntelliJ reduces the coomplexity of this step as the build process will be through the click of a button. 
 
 
 ### 3: Run the Services with Docker Compose
@@ -75,9 +77,9 @@ Each microservice has RabbitMQ producers and consumers set up for event communic
 2.	Observe how other microservices that subscribe to this exchanges react to the event (check logs for message consumption).
 
 ### Swagger API Documentation
-Here are the endpoints for APIs in the product and order service for purposes of testing
-http://localhost:8083/swagger-ui/index.html
-http://localhost:8084/swagger-ui/index.html
+Here are the endpoints for APIs in the product and order service for purposes of testing.
+- Product Service: http://localhost:8083/swagger-ui/index.html
+- Order Service: http://localhost:8084/swagger-ui/index.html
 
 ## Stopping the Services
 
