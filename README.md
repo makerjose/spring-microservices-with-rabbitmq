@@ -11,6 +11,7 @@ The main project folder includes the following:
 - **Order-service**: Processes customer orders.
 - **Email-service**: Sends notifications based on order and customer actions.
 - **Compose.yml**: Runs all services in one network with a single command.
+- **Init.sql**: Initialization of databases.
 - **Readme.md**: Project documentation.
 
 ## Prerequisites

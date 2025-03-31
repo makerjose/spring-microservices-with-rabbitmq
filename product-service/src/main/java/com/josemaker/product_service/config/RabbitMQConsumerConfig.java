@@ -18,6 +18,8 @@ public class RabbitMQConsumerConfig {
     private final String orderCreatedQueue;
     private final String orderCreatedExchange;
 
+    // Constructor for RabbitMQConsumerConfig dependency injection
+    // Injects RabbitMQ configuration properties from application properties
     public RabbitMQConsumerConfig(
             @Value("${spring.rabbitmq.host}") String rabbitMQHost,
             @Value("${spring.rabbitmq.port}") int rabbitMQPort,
@@ -34,6 +36,8 @@ public class RabbitMQConsumerConfig {
     }
 
     @Bean
+    // Manages connections to RabbitMQ
+    // Caches channels for reuse, improving performance by reducing the overhead of creating new connections frequently
     public CachingConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory(rabbitMQHost, rabbitMQPort);
         connectionFactory.setUsername(username);
@@ -42,22 +46,25 @@ public class RabbitMQConsumerConfig {
     }
 
     @Bean
+    // automatically declares queues, exchanges, and bindings when the application starts.
     public RabbitAdmin rabbitAdmin(CachingConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
 
     @Bean
+    // primary message producer, sends messages to exchanges and queues
     public RabbitTemplate rabbitTemplate(CachingConnectionFactory connectionFactory) {
         return new RabbitTemplate(connectionFactory);
     }
 
-
     @Bean
+    // durable queues survive RabbitMQ restarts
     public Queue orderCreatedQueue() {
         return new Queue(orderCreatedQueue, true); // durable queue
     }
 
     @Bean
+    // binds orderCreatedQueue to orderCreatedExchange
     public Binding orderCreatedBinding(Queue orderCreatedQueue) {
         return BindingBuilder.bind(orderCreatedQueue)
                 .to(new FanoutExchange(orderCreatedExchange, true, false)); // Use existing exchange

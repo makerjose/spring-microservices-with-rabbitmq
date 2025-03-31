@@ -11,6 +11,7 @@ public class RabbitMQProducerConfig {
     private final String orderCreatedExchange;
     private final String orderCreatedQueue;
 
+    // Injects RabbitMQ configuration properties from application properties
     public RabbitMQProducerConfig(
             @Value("${rabbitmq.exchanges.order-created}") String orderCreatedExchange,
             @Value("${rabbitmq.queues.order-created}") String orderCreatedQueue) {

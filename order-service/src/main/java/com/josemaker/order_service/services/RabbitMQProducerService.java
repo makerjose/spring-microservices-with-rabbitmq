@@ -16,6 +16,7 @@ public class RabbitMQProducerService {
     private final String orderCreatedExchange;
     private final ObjectMapper objectMapper;
 
+    // Constructor to initialize RabbitTemplate, exchange name, and ObjectMapper
     public RabbitMQProducerService(
             RabbitTemplate rabbitTemplate,
             @Value("${rabbitmq.exchanges.order-created}") String orderCreatedExchange,
@@ -25,6 +26,10 @@ public class RabbitMQProducerService {
         this.objectMapper = objectMapper;
     }
 
+    // Sends an OrderCreated event to the RabbitMQ exchange
+    // Converts the OrderEntity object to a JSON byte array before sending
+    // Adds necessary headers, including content type as "application/json"
+    // Uses a fanout exchange (empty routing key) to broadcast the event to all bound queues
     public void sendOrderCreatedEvent(OrderEntity orderEntity) {
         try {
             Map<String, Object> headers = new HashMap<>();
