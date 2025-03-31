@@ -51,12 +51,12 @@ public class RabbitMQConsumerConfig {
         return new RabbitTemplate(connectionFactory);
     }
 
+
     @Bean
     public Queue orderCreatedQueue() {
         return new Queue(orderCreatedQueue, true); // durable queue
     }
 
-    // bind exchange to queue
     @Bean
     public Binding orderCreatedBinding(Queue orderCreatedQueue) {
         return BindingBuilder.bind(orderCreatedQueue)

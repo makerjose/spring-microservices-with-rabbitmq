@@ -17,7 +17,7 @@ The main project folder includes the following:
 
 - **Docker** and **Docker Compose** installed on your machine.
 - **Java JDK 17** or above for local development.
-- **IntelliJ IDEA** is recomended.
+- **IntelliJ IDEA** Community Edition is recomended.
 
 ## Getting Started
 
@@ -39,10 +39,28 @@ cd ../order-service mvn clean install
 
 cd ../email-service mvn clean install
 ```
-Installing the Maven Plugin from IntelliJ reduces the coomplexity of this step as the build process will be through the click of a button. 
+Alternatively, you can use the Maven plugin in IntelliJ IDEA to build the project with a single click. 
 
+### 3: Configure the Mail Server
 
-### 3: Run the Services with Docker Compose
+The **Email Service** requires SMTP settings to send emails. Create a .env file in the resources directory. Update the following environment variables in your .env file:
+```bash
+SPRING_MAIL_HOST=smtp.gmail.com
+SPRING_MAIL_PORT=587
+SPRING_MAIL_USERNAME=your-email@gmail.com
+SPRING_MAIL_PASSWORD=your-app-password
+SPRING_MAIL_SMTP_AUTH=true
+SPRING_MAIL_SMTP_STARTTLS=true
+```
+
+**How to Generate a Gmail App Password**
+1. Go to Google Account Security Settings: https://myaccount.google.com/security.
+2. Enable 2-Step Verification (if not already enabled).
+3. Scroll down to App Passwords and select Mail as the app and Other (Custom Name) for the device.
+4. Generate the password and copy it.
+5. Use this password in SPRING_MAIL_PASSWORD.
+
+### 4: Run the Services with Docker Compose
 
 From the main project directory, use Docker Compose to start all the services, including RabbitMQ.
 ```bash
@@ -53,23 +71,18 @@ This will:
 -	Launch RabbitMQ for handling message brokering.
 -	Start each microservice and postgres on its designated port as specified in the compose.yml file.
 
-### 4: Set Up Databases in Postgres
+### 5: Access Databases in Postgres
 
 •	Access the Postgres container:
 ```bash
 docker exec -it postgres psql -U postgres
-```
-•	Create the required databases:
-```bash
-CREATE DATABASE "product-db";
-CREATE DATABASE "order-db";
 ```
 •	To verify the databases, list all available databases and then quit:
 ```bash
 \l
 \q
 ```
-
+ 
 ### Testing RabbitMQ Communication
 
 Each microservice has RabbitMQ producers and consumers set up for event communication. To test this:
