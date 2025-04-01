@@ -57,7 +57,7 @@ SPRING_MAIL_SMTP_STARTTLS=true
 **How to Generate a Gmail App Password**
 1. Go to Google Account Security Settings: https://myaccount.google.com/security.
 2. Enable 2-Step Verification (if not already enabled).
-3. Scroll down to App Passwords and select Mail as the app and Other (Custom Name) for the device.
+3. Search for "App Passwords" and create an App Name e.g. "Mail Server".
 4. Generate the password and copy it.
 5. Use this password in SPRING_MAIL_PASSWORD.
 
