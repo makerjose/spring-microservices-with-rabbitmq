@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -19,12 +18,8 @@ public class OrderService {
     }
 
     @Transactional
+    // save to DB
     public void createOrder(OrderEntity orderEntity){
         orderRepository.save(orderEntity);
-    }
-
-    // find order by orderId
-    public Optional<OrderEntity> findByOrderId(Long orderId) {
-        return orderRepository.findByOrderId(orderId);
     }
 }
