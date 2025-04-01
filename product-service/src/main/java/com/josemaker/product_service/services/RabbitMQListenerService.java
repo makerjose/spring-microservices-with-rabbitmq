@@ -15,11 +15,14 @@ public class RabbitMQListenerService {
     private final ProductService productService;
     private final ObjectMapper objectMapper;
 
+    // Constructor, initialize productService and Object Mapper
     public RabbitMQListenerService(ProductService productService, ObjectMapper objectMapper) {
         this.productService = productService;
         this.objectMapper = objectMapper;
     }
 
+    // Deserialize the message into orderCreatedDto object
+    // Calls the productService to update the inventory based on the order details
     @RabbitListener(queues = "${rabbitmq.queues.order-created}")
     public void consumeOrderEvent(byte[] messageBody) {
         try {

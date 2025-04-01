@@ -25,11 +25,13 @@ public class RabbitMQProducerConfig {
         return new FanoutExchange(orderProcessedExchange);
     }
 
+    // Define orderProcessedQueue
     @Bean
     public Queue orderProcessedQueue() {
         return new Queue(orderProcessedQueue, true);
     }
 
+    // Bind queue to fanout exchange
     @Bean
     public Binding orderProcessedBinding(Queue orderProcessedQueue, FanoutExchange orderProcessedFanoutExchange) {
         return BindingBuilder.bind(orderProcessedQueue).to(orderProcessedFanoutExchange);
