@@ -81,8 +81,11 @@ docker exec -it postgres psql -U postgres
 •	To verify the databases, list all available databases and then quit:
 ```bash
 \l
+\c product-db
 \q
 ```
+You are free to perform psql commands on this console.
+
  
 ### Testing RabbitMQ Communication
 

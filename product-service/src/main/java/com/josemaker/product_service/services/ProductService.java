@@ -58,7 +58,7 @@ public class ProductService {
             orderProcessedDto.setQuantity(orderCreatedDto.getQuantity());
             orderProcessedDto.setProcessedDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             orderProcessedDto.setProductName(productEntity.getName());
-            orderProcessedDto.setTotalPrice(productEntity.getTotalPrice());
+            orderProcessedDto.setTotalPrice(productEntity.getTotalPrice() * orderQuantity);
 
             rabbitMQProducerService.sendOrderProcessedEvent(orderProcessedDto);
             logger.info("Order processed event sent for Product ID: {}", productId);
